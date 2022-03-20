@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+    <br/>
+    <div>
+        <h2>New Project</h2>
+        <div>
+            <form action="/projects/" method="POST">
+                <input type="text" name="project_name" placeholder="Project Name..."/>
+                <input type="text" name="description" placeholder="Description..."/>
+                <input type="number" name="price" placeholder="Price..."/>
+                <button>Create</button>
+            </form>
+        </div>
+    </div>
+    <br/>
+    <h2>Project List</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Project ID</th>    
+                <th>Project Name</th>
+                <th>Description</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        {% for project in page_data.projects %}
+        <tbody>
+            <tr>
+                <td>
+                    {{ project.project_id }}
+                </td>
+                <td>
+                    <a href="/projects/{{ project.project_id }}/">{{ project.project_name }}</a>
+                </td>
+                <td>
+                    {{ project.description }}
+                </td>
+                <td>
+                    {{ project.price }}
+                </td>
+                <td>
+                    <img src="{{ project.image_url }}" style="width: 250px">
+                </td>
+            </tr>
+        </tbody>
+        {% endfor %}
+    </table>
+{% endblock %}

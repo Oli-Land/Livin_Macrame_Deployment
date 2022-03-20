@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+    <br/>
+    <div>
+        <h2>New Knot</h2>
+        <div>
+            <form action="/knots/" method="POST">
+                <input type="text" name="knot_name" placeholder="Knot Name..."/>
+                <input type="text" name="description" placeholder="Description..."/>
+                <input type="number" name="length" placeholder="Length per Knot(cm)..."/>
+                <input type="number" name="width" placeholder="Width per Knot (cm)..."/>
+                <input type="number" name="num_of_cords" placeholder="Number of Cords..."/>
+                <input type="number" name="cords_length" placeholder="Longest Cord (cm)..."/>                
+                <button>Create</button>
+            </form>
+        </div>
+    </div>
+    <br/>
+    <h2>Knot List</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Knot ID</th>    
+                <th>Knot Name</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        {% for knot in page_data.knots %}
+        <tbody>
+            <tr>
+                <td>
+                    {{ knot.knot_id }}
+                </td>
+                <td>
+                    <a href="/knots/{{ knot.knot_id }}/">{{ knot.knot_name }}</a>
+                </td>
+                <td>
+                    {{ knot.description }}
+                </td>
+                <td>
+                    <img src="{{ knot.image_url }}" style="width: 250px">
+                </td>
+            </tr>
+        </tbody>
+        {% endfor %}
+    </table>
+{% endblock %}

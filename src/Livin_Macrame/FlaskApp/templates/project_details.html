@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <h2>{{ page_data.project.project_name }}</h2>
+    <img src="{{ page_data.image }}" style="width: 250px">
+    <p>Project ID: {{ page_data.project.project_id }}</p>
+    <p>Description: {{ page_data.project.description }}</p>
+    <p>Sell Price: ${{ page_data.project.price }}</p>
+    <p>Total Cord Used In Project: {{ page_data.project_total_cord }}cm</p>
+    <p>Cost of Cord Used In Project: ${{ page_data.project_total_cost }}</p>
+    <p>Creator: {{ page_data.project.creator.name }} ({{ page_data.project.creator.email }})</p>
+
+    <br/><br/>
+
+
+    <h3>Patterns in Project:</h3>
+    <ul>
+        {% for pattern in page_data.project.patterns %}
+            <li>ID: {{ pattern.pattern_id }}
+                <a href="/patterns/{{ pattern.pattern_id }}/">{{ pattern.pattern_name }}</a>
+                
+            </li>            
+                
+        {% endfor %}
+    </ul>
+
+    <form action="/projects/{{ page_data.project.project_id }}/add_pattern/" method="POST">
+        <input type="number" name="pattern_id" placeholder="ID of Pattern to Include..."/>
+        <button>Include Pattern</button>
+    </form>
+    <form action="/projects/{{ page_data.project.project_id }}/remove_pattern/" method="POST">
+        <input type="number" name="pattern_id" placeholder="ID of Pattern to Remove..."/>
+        <button>REMOVE Pattern</button>
+    </form>
+
+    <br/><br/>
+
+    <h3>Update Project Info</h3>
+    <form action="/projects/{{ page_data.project.project_id }}/" method="POST">
+        <input type="text" name="project_name" placeholder="Project Name..."/>
+        <input type="text" name="description" placeholder="Description..."/>
+        <input type="number" name="price" placeholder="Price..."/> 
+        <button>Update</button>
+    </form>
+
+    <br/><br/>
+
+    <h3>Update Image:</h3>
+    <form action="/projects/{{ page_data.project.project_id }}/image/" method="POST" enctype = "multipart/form-data">
+        <input type="file" name="image">
+        <input type="submit">
+    </form>
+
+    <br/><br/>
+    
+    <form action = "/projects/{{ page_data.project.project_id }}/delete/", method="POST">
+        <button>DELETE PROJECT</button>
+    </form>
+
+{% endblock %}

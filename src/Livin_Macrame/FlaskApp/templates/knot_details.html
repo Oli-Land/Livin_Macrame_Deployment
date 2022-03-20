@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <h2>{{ page_data.knot.knot_name }}</h2>
+    <img src="{{ page_data.image }}" style="width: 250px">
+    <p>Knot ID: {{ page_data.knot.knot_id }}</p>
+    <p>Description: {{ page_data.knot.description }}</p>
+    <p>Knot Length: {{ page_data.knot.length }}cm</p>
+    <p>Knot Width: {{ page_data.knot.width }}cm</p>
+    <p>Number of Cords Required: {{ page_data.knot.num_of_cords }}</p>
+    <p>Length of Each Cord in Knot: {{ page_data.knot.cords_length }}cm</p>
+    <p>Total Cord used in Knot: {{ page_data.knot.num_of_cords * page_data.knot.cords_length }}cm</p>
+
+    <p>Creator: {{ page_data.knot.creator.name }} ({{ page_data.knot.creator.email }})</p>
+
+
+    <br/><br/>
+    
+    <h3>Cord Used</h3>
+    <a href="/cords/{{ page_data.knot.cord.cord_id }}/">{{ page_data.knot.cord.cord_name }}</a>
+    <p>Cord ID: ({{ page_data.knot.cord.cord_id }})</p>
+    <h4>Choose Cord (ID)</h4>
+    <form action="/knots/{{ page_data.knot.knot_id }}/add_cord/" method="POST">
+        <input type="number" name="cord_id" placeholder="ID of Cord used..."/>
+        <button>Select Cord</button>
+    </form>
+    <form action="/knots/{{ page_data.knot.knot_id }}/remove_cord/" method="POST">
+        <button>REMOVE from Knot</button>
+    </form>
+
+    <br/><br/>
+
+    <h3>Update Knot Info</h3>
+    <form action="/knots/{{ page_data.knot.knot_id }}/" method="POST">
+        <input type="text" name="knot_name" placeholder="Knot Name..."/>
+        <input type="text" name="description" placeholder="Description..."/>
+        <input type="number" name="length" placeholder="Length per Knot(cm)..."/>
+        <input type="number" name="width" placeholder="Width per Knot (cm)..."/>
+        <input type="number" name="num_of_cords" placeholder="Number of Cords..."/>
+        <input type="number" name="cords_length" placeholder="Longest Cord (cm)..."/>
+        <button>Update</button>
+    </form>
+
+    <br/><br/>
+
+    <h3>Update Image:</h3>
+    <form action="/knots/{{ page_data.knot.knot_id }}/image/" method="POST" enctype = "multipart/form-data">
+        <input type="file" name="image">
+        <input type="submit">
+    </form>
+
+    <br/><br/>
+    
+    <form action = "/knots/{{ page_data.knot.knot_id }}/delete/", method="POST">
+        <button>DELETE KNOT</button>
+    </form>
+
+{% endblock %}
